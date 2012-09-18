@@ -1746,8 +1746,7 @@ static void move_linked_works(struct work_struct *work, struct list_head *head,
 static void cwq_activate_delayed_work(struct work_struct *work)
 {
 	struct cpu_workqueue_struct *cwq = get_work_cwq(work);
-	try_to_grab_pending() of a delayed work item
-
+	 
 	trace_workqueue_activate_work(work);
 	move_linked_works(work, &cwq->pool->worklist, NULL);
 	__clear_bit(WORK_STRUCT_DELAYED_BIT, work_data_bits(work));
