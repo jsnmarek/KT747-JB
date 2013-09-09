@@ -4,7 +4,7 @@ export PARENT_DIR=`readlink -f ..`
 export INITRAMFS_DEST=$KERNELDIR/kernel/usr/initramfs
 export INITRAMFS_SOURCE=`readlink -f ..`/Ramdisks/Slimmed_JB_MR2-3.4
 export CONFIG_AOSP_BUILD=y
-export PACKAGEDIR=$PARENT_DIR/Packages/Slimmed_MR2-3.4-ATT
+export PACKAGEDIR=$PARENT_DIR/Packages/Slimmed_JB_MR2-3.4-ATT
 #Enable FIPS mode
 export USE_SEC_FIPS_MODE=true
 export ARCH=arm
@@ -72,8 +72,8 @@ if [ -e $KERNELDIR/arch/arm/boot/zImage ]; then
 	cp -R ../META-INF .
 	rm ramdisk.gz
 	rm zImage
-	rm ../Slimmed-MR2-3.4-ATT*.zip
-	zip -r ../Slimmed-MR2-3.4-ATT-$curdate.zip .
+	rm ../Slimmed-JB-MR2-3.4-ATT*.zip
+	zip -r ../Slimmed-JB-MR2-3.4-ATT-$curdate.zip .
 	cd $KERNELDIR
 else
 	echo "KERNEL DID NOT BUILD! no zImage exist"
