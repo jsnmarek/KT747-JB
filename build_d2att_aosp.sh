@@ -2,9 +2,9 @@
 export KERNELDIR=`readlink -f .`
 export PARENT_DIR=`readlink -f ..`
 export INITRAMFS_DEST=$KERNELDIR/kernel/usr/initramfs
-export INITRAMFS_SOURCE=`readlink -f ..`/Ramdisks/AOSP_JB_MR2-3.4
+export INITRAMFS_SOURCE=`readlink -f ..`/Ramdisks/Slimmed_JB_MR2-3.4
 export CONFIG_AOSP_BUILD=y
-export PACKAGEDIR=$PARENT_DIR/Packages/AOSP_JB_MR1_ATT
+export PACKAGEDIR=$PARENT_DIR/Packages/Slimmed_JB_MR2-3.4-ATT
 #Enable FIPS mode
 export USE_SEC_FIPS_MODE=true
 export ARCH=arm
@@ -12,7 +12,7 @@ export ARCH=arm
 # export CROSS_COMPILE=/home/ktoonsez/kernel/siyah/arm-2011.03/bin/arm-none-eabi-
 # export CROSS_COMPILE=/home/ktoonsez/android/system/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 # export CROSS_COMPILE=/home/ktoonsez/aokp4.2/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
-export CROSS_COMPILE=$PARENT_DIR/linaro4.7/bin/arm-eabi-
+export CROSS_COMPILE=/home/jason/Toolchains/android-toolchain-eabi-4.7.4/bin/arm-eabi-
 
 echo "Remove old Package Files"
 rm -rf $PACKAGEDIR/*
@@ -42,23 +42,23 @@ rm arch/arm/boot/zImage
 
 echo "Make the kernel"
 # make KT747_d2att_defconfig
-make VARIANT_DEFCONFIG=cyanogen_d2att_defconfig SELINUX_DEFCONFIG=m2selinux_defconfig KT747_d2_defconfig
+make VARIANT_DEFCONFIG=cyanogen_d2att_defconfig SELINUX_DEFCONFIG=m2selinux_defconfig Slimmed_d2_defconfig
 
 HOST_CHECK=`uname -n`
-if [ $HOST_CHECK = 'ktoonsez-VirtualBox' ] || [ $HOST_CHECK = 'task650-Underwear' ]; then
-	echo "Ktoonsez/task650 24!"
-	make -j24
+if [ $HOST_CHECK = 'jason-pc' ]; then
+	echo "Jason-PC!"
+	make -j12
 else
 	echo "Others! - " + $HOST_CHECK
-	make -j`grep 'processor' /proc/cpuinfo | wc -l`
+	make -j12
 fi;
 
 echo "Copy modules to Package"
 cp -a $(find . -name *.ko -print |grep -v initramfs) $PACKAGEDIR/system/lib/modules/
 cp 00post-init.sh $PACKAGEDIR/system/etc/init.d/00post-init.sh
 cp enable-oc.sh $PACKAGEDIR/system/etc/init.d/enable-oc.sh
-cp /home/ktoonsez/workspace/com.ktoonsez.KTweaker.apk $PACKAGEDIR/system/app/com.ktoonsez.KTweaker.apk
-# cp ../Ramdisks/libsqlite.so $PACKAGEDIR/system/lib/libsqlite.so
+cp /home/jason/kernel/com.ktoonsez.KTweaker.apk $PACKAGEDIR/system/app/com.ktoonsez.KTweaker.apk
+#cp ../Ramdisks/libsqlite.so $PACKAGEDIR/system/lib/libsqlite.so
 
 if [ -e $KERNELDIR/arch/arm/boot/zImage ]; then
 	echo "Copy zImage to Package"
@@ -72,8 +72,8 @@ if [ -e $KERNELDIR/arch/arm/boot/zImage ]; then
 	cp -R ../META-INF .
 	rm ramdisk.gz
 	rm zImage
-	rm ../KT747-AOSP-JB-MR2-3.4-ATT*.zip
-	zip -r ../KT747-AOSP-JB-MR2-3.4-ATT-$curdate.zip .
+	rm ../Slimmed-JB-MR2-3.4-ATT*.zip
+	zip -r ../Slimmed-JB-MR2-3.4-ATT-$curdate.zip .
 	cd $KERNELDIR
 else
 	echo "KERNEL DID NOT BUILD! no zImage exist"
