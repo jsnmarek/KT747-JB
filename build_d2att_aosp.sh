@@ -46,8 +46,8 @@ make VARIANT_DEFCONFIG=cyanogen_d2att_defconfig SELINUX_DEFCONFIG=m2selinux_defc
 
 HOST_CHECK=`uname -n`
 if [ $HOST_CHECK = 'jason-pc' ]; then
-	echo "Jason-PC!"
-	make -j12
+	echo "Jason-PC! 8"
+	make -j8
 else
 	echo "Others! - " + $HOST_CHECK
 	make -j12
