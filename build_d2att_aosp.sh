@@ -12,7 +12,7 @@ export ARCH=arm
 # export CROSS_COMPILE=/home/ktoonsez/kernel/siyah/arm-2011.03/bin/arm-none-eabi-
 # export CROSS_COMPILE=/home/ktoonsez/android/system/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 # export CROSS_COMPILE=/home/ktoonsez/aokp4.2/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
-export CROSS_COMPILE=/home/jason/Toolchains/android-toolchain-eabi-4.7.4/bin/arm-eabi-
+export CROSS_COMPILE=/home/jason/Android/linaro-4.7/bin/arm-eabi-
 
 echo "Remove old Package Files"
 rm -rf $PACKAGEDIR/*
@@ -50,7 +50,7 @@ if [ $HOST_CHECK = 'ktoonsez-VirtualBox' ] || [ $HOST_CHECK = 'task650-Underwear
 	make -j24
 else
 	echo "Others! - " + $HOST_CHECK
-	make -j`grep 'processor' /proc/cpuinfo | wc -l`
+	make -j12
 fi;
 
 echo "Copy modules to Package"
